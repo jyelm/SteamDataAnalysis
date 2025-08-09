@@ -26,6 +26,7 @@ def create_database_schema(conn):
             peak_players INTEGER NOT NULL,
             year INTEGER,
             month_num INTEGER,
+            date TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (appid) REFERENCES games (appid)
         )
@@ -98,7 +99,7 @@ def import_csv_to_sqlite(csv_file, db_file):
     )
     
     # Prepare history data (without game_name to avoid redundancy)
-    history_df = df[['appid', 'month', 'avg_players', 'peak_players', 'year', 'month_num']].copy()
+    history_df = df[['appid', 'month', 'avg_players', 'peak_players', 'year', 'month_num', 'date']].copy()
     
     # Remove rows with invalid dates
     history_df = history_df.dropna(subset=['year', 'month_num'])
